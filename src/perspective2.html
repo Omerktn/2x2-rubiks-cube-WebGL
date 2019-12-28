@@ -1,0 +1,198 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+</head>
+  <script id="vertex-shader" type="x-shader/x-vertex">
+    attribute  vec4 vPosition;
+    attribute  vec4 vColor;
+    varying vec4 fColor;
+
+
+    uniform mat4 modelViewProjectionMatrix;
+
+    void main()
+    {
+        gl_Position = modelViewProjectionMatrix * vPosition;
+        fColor = vColor;
+    }
+  </script>
+  <script id="fragment-shader" type="x-shader/x-fragment">
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+
+
+    varying vec4 fColor;
+
+    void
+    main()
+    {
+        gl_FragColor = fColor;
+    }
+  </script>
+  <script type="text/javascript" src="../Common/webgl-utils.js"></script>
+  <script type="text/javascript" src="../Common/initShaders.js"></script>
+  <script type="text/javascript" src="../Common/MV.js"></script>
+  <script type="text/javascript" src="perspective2.js"></script>
+
+
+  <body style="background-image:linear-gradient(#3399ff, #3333ff);"">
+    <h1 align="center" style="color:white;"> Ömer Kurttekin </h1>
+
+    <table border="1" align="center">
+      <tr>
+        <td>
+          <canvas id="gl-canvas" width="524" height="524">
+            Oops ... your browser doesn't support the HTML5 canvas element
+          </canvas>
+          <br />
+          <!--Axes: x-Axis: blue, y-axis: black, z-axis: red-->
+        </td>
+        <td>
+
+          <button class="button" onclick="hideShowPanel()">Panel</button> <br />
+          <div id="slider-sec" style="border: 1px solid white; padding: 3px; margin: 2px; display:none">
+          Camera Position:
+          <div>
+            radius 0.05<input
+              id="radiusSlider"
+              type="range"
+              min="0.05"
+              max="25"
+              step="0.1"
+              value="5"
+              />
+            100
+            <span id="radiusValue">10</span>
+          </div>
+          <div>
+            theta -90<input
+              id="thetaSlider"
+              type="range"
+              min="-90"
+              max="90"
+              step="0.1"
+              value="55"
+              />
+            90
+            <span id="thetaValue">51</span>
+          </div>
+          <div>
+            phi -90<input
+              id="phiSlider"
+              type="range"
+              min="-90"
+              max="90"
+              step="0.1"
+              value="32"
+              />
+            90
+            <span id="phiValue">83</span>
+          </div>
+          <p></p>
+          Projection Volume:
+          <div>
+            zNear .01<input
+              id="zNearSlider"
+              type="range"
+              min=".01"
+              max="3"
+              step="0.1"
+              value="0.3"
+              />
+            3
+            <span id="zNearValue">0.1</span>
+          </div>
+          <div>
+            zFar 3<input
+              id="zFarSlider"
+              type="range"
+              min="3"
+              max="1000"
+              step="1.0"
+              value="1000"
+              />
+            1000
+            <span id="zFarValue">1000</span>
+          </div>
+          <div>
+            fov 10<input
+              id="fovSlider"
+              type="range"
+              min="10"
+              max="120"
+              step="1"
+              value="90"
+              />
+            120
+            <span id="fovValue">90</span>
+          </div>
+          <div>
+            aspect 0.01<input
+              id="aspectSlider"
+              type="range"
+              min="0.01"
+              max="10"
+              step="0.01"
+              value="1"
+              />
+            10
+            <span id="aspectValue">1</span>
+          </div>
+          </div>
+
+          <div>
+            <table>
+              <tr>
+                <th><button class="button" type="btnF" onclick="buttonF()">F</button></th>
+                <th><button class="button" type="btnR" onclick="buttonR()">R</button></th>
+                <th><button class="button" type="btnL" onclick="buttonL()">L</button></th>
+                <th><button class="button" type="btnU" onclick="buttonU()">U</button></th>
+                <th><button class="button" type="btnD" onclick="buttonD()">D</button></th>
+                <th><button class="button" type="btnB" onclick="buttonB()">B</button></th>
+              </tr>
+              <tr>
+                <td><button class="button" type="btnFr" onclick="buttonFr()">F'</button></td>
+                <td><button class="button" type="btnRr" onclick="buttonRr()">R'</button></td>
+                <td><button class="button" type="btnLr" onclick="buttonLr()">L'</button></td>
+                <td><button class="button" type="btnUr" onclick="buttonUr()">U'</button></td>
+                <td><button class="button" type="btnDr" onclick="buttonDr()">D'</button></td>
+                <td><button class="button" type="btnBr" onclick="buttonBr()">B'</button></td>
+              </tr>
+            </table>
+          </div>
+
+        </td>
+      </tr>
+    </table>
+
+    <style>
+.button {
+  background-color: white; /* #ffff66; */
+  border: 2px solid #000000;
+  color: black;
+  text-shadow: 1px 1px #000000;
+  padding: 13px 13px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 8px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  margin: 2px;
+  width: 100%;
+  table-layout: fixed;
+}
+
+.button:hover {
+  background-color: black;
+  color: white;
+}
+</style>
+
+  </body>
+</html>
