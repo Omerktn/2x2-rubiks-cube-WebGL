@@ -49,19 +49,18 @@ function buttonU() {
 
       upFace = shiftRight(upFace);
       turner = upFace;
-      // Left Face
+
       lfFace[0] = upFace[0];
       lfFace[1] = upFace[3];
-      // Right
+
       rgFace[0] = upFace[2];
       rgFace[1] = upFace[1];
-      // Front
+
       frFace[0] = upFace[3];
       frFace[1] = upFace[2];
-      // Back
+
       bcFace[0] = upFace[1];
       bcFace[1] = upFace[0];
-      // Up itself
 
   }
 }
@@ -87,7 +86,7 @@ function buttonUr() {
       // Back
       bcFace[0] = upFace[1];
       bcFace[1] = upFace[0];
-      // Up itself
+
   }
 }
 function buttonD() {
@@ -405,7 +404,6 @@ function setupGameObjects(gl) {
   const gameObjects = {};
   let spc = 0.05
 
-  // RED @@@@
   gameObjects["cube1"] = new Cube(
     gl,
     vec4(1.0, 1.0, 0.0, 1.0), // UP
@@ -429,8 +427,6 @@ function setupGameObjects(gl) {
 };
 
 
-
-  // BLUE @@@@
   gameObjects["cube2"] = new Cube(
     gl,
     vec4(1.0, 1.0, 0.0, 1.0),
@@ -452,7 +448,6 @@ function setupGameObjects(gl) {
   updatePos(obj, id);
 };
 
-  //
   gameObjects["cube3"] = new Cube(
     gl,
     vec4(1.0, 1.0, 0.0, 1.0),
@@ -474,7 +469,6 @@ function setupGameObjects(gl) {
   updatePos(obj, id);
 };
 
-  // GREEN >>>>
   gameObjects["cube4"] = new Cube(
     gl,
     vec4(1.0, 1.0, 0.0, 1.0),
@@ -498,7 +492,6 @@ function setupGameObjects(gl) {
 
 
   /// ----------------------- Bottom face --------------------
-  // RED @@@@
   gameObjects["cube5"] = new Cube(
     gl,
     vec4(0, 0, 0, 1.0),
@@ -520,7 +513,6 @@ function setupGameObjects(gl) {
   updatePos(obj, id);
 };
 
-// GREEN >>>>
 gameObjects["cube6"] = new Cube(
   gl,
   vec4(0., 0., 0., 1.0),
@@ -542,7 +534,6 @@ let id = 6;
 updatePos(obj, id);
 };
 
-//
 gameObjects["cube7"] = new Cube(
   gl,
   vec4(0, 0, 0, 1.0),
@@ -565,7 +556,6 @@ updatePos(obj, id);
 };
 
 
-  // BLUE @@@@
   gameObjects["cube8"] = new Cube(
     gl,
     vec4(0, 0, 0, 1.0),
@@ -586,45 +576,11 @@ updatePos(obj, id);
   let id = 8;
   updatePos(obj, id);
 };
-
-
-  //// example of deleting a game object: delete the z axis
-  delete gameObjects["zAxis"];
-  delete gameObjects["yAxis"];
-  delete gameObjects["xAxis"];
-
   //// return all the objects
   return gameObjects;
 }
 // setup game END
 
-
-var AMORTIZATION = 0.95;
-var drag = false;
-var old_x, old_y;
-var dX = 0, dY = 0;
-
-   var mouseDown = function(e) {
-      drag = true;
-      old_x = e.pageX, old_y = e.pageY;
-      e.preventDefault();
-      return false;
-   };
-
-   var mouseUp = function(e){
-      drag = false;
-   };
-
-   var mouseMove = function(e) {
-      const canvas = document.getElementById("gl-canvas");
-      if (!drag) return false;
-      dX = (e.pageX-old_x)*2*Math.PI/canvas.width,
-      dY = (e.pageY-old_y)*2*Math.PI/canvas.height;
-      THETA+= dX;
-      PHI+=dY;
-      old_x = e.pageX, old_y = e.pageY;
-      e.preventDefault();
-   };
 
 //// camera parameters
 var near;
@@ -815,9 +771,6 @@ if(event.keyCode == 87) {
 }
 }
 
-var THETA = 0,
-PHI = 0;
-var time_old = 0;
 
 function render(gl, gameObjects) {
   //// clear the background
@@ -833,8 +786,6 @@ function render(gl, gameObjects) {
 
   //// draw all objects
   for (const [name, gameObject] of Object.entries(gameObjects)) {
-    gameObject.transform.rotation = mult(rotateX(THETA), gameObject.transform.rotation);
-    gameObject.transform.rotation = mult(rotateY(PHI), gameObject.transform.rotation);
 
     gameObject.update();
     gameObject.viewMatrix = viewMatrix;
@@ -856,11 +807,6 @@ function setupWebGL() {
   aspect = canvas.width / canvas.height;
   gl.clearColor(0.3, 0.3, 0.3, 1.0);
   gl.enable(gl.DEPTH_TEST);
-
-  canvas.addEventListener("mousedown", mouseDown, false);
-  canvas.addEventListener("mouseup", mouseUp, false);
-  canvas.addEventListener("mouseout", mouseUp, false);
-  canvas.addEventListener("mousemove", mouseMove, false);
 
 
   return gl;
